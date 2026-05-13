@@ -1,8 +1,8 @@
 """
 Database – Baseline Implementation
 Sequence diagram traceability:
-  saveSubmission(data) → confirmation
-  fetchReviewers()     → reviewerList
+  saveSubmission(data) = confirmation
+  fetchReviewers()     = reviewerList
   saveScore(score)
 """
 
@@ -54,7 +54,7 @@ class Database:
         return submission_id
 
     # ------------------------------------------------------------------ #
-    #  fetchReviewers() → reviewerList                                     #
+    #  fetchReviewers() -> reviewerList                                     #
     # ------------------------------------------------------------------ #
     def fetch_reviewers(self) -> list:
         """
