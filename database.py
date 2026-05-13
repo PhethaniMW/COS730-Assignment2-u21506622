@@ -1,8 +1,8 @@
 """
 Database – Baseline Implementation
 Sequence diagram traceability:
-  saveSubmission(data) = confirmation
-  fetchReviewers()     = reviewerList
+  saveSubmission(data)-> confirmation
+  fetchReviewers()     -> reviewerList
   saveScore(score)
 """
 
