@@ -1,5 +1,5 @@
-# COS730 Assignment 2 — Intelligent Submission and Review System
-
+# COS730 Assignment 2
+**#U21506622**
 **From Behavioural Models to Optimised Implementation**
 
 ## Repository Structure
@@ -47,9 +47,9 @@ python report/empirical_comparison.py
 
 | Metric | Baseline | Optimised | Improvement |
 |---|---|---|---|
-| Method calls/run | 25 | 10 | 60% ↓ |
-| Mean execution time | 0.0398 ms | 0.0269 ms | 32.4% ↓ |
-| Timing std deviation | 0.2627 ms | 0.0098 ms | 96.3% ↓ |
-| Source lines | 695 | 456 | 34.4% ↓ |
-| Method count | 36 | 22 | 38.9% ↓ |
+| Method calls/run | 25 | 10 | 60%  |
+| Mean execution time | 0.0398 ms | 0.0269 ms | 32.4% |
+| Timing std deviation | 0.2627 ms | 0.0098 ms | 96.3% |
+| Source lines | 695 | 456 | 34.4% |
+| Method count | 36 | 22 | 38.9% |
 | Decision logic locations | 3 | 1 | 67% ↓ |
