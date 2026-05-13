@@ -1,0 +1,32 @@
+{
+  "baseline": {
+    "avg_time_ms": 0.0398,
+    "median_time_ms": 0.025,
+    "stdev_time_ms": 0.2627,
+    "min_time_ms": 0.0239,
+    "max_time_ms": 5.8976,
+    "avg_method_calls": 25,
+    "classes": 8,
+    "methods": 36,
+    "total_lines": 695,
+    "avg_method_length": 11.1
+  },
+  "optimised": {
+    "avg_time_ms": 0.0269,
+    "median_time_ms": 0.0241,
+    "stdev_time_ms": 0.0098,
+    "min_time_ms": 0.0231,
+    "max_time_ms": 0.1136,
+    "avg_method_calls": 10,
+    "classes": 9,
+    "methods": 22,
+    "total_lines": 456,
+    "avg_method_length": 8.7
+  },
+  "improvement": {
+    "time_pct": 32.4,
+    "calls_pct": 60.0,
+    "lines_pct": 34.4,
+    "method_len_pct": 21.6
+  }
+}
