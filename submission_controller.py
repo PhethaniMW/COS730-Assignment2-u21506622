@@ -1,16 +1,16 @@
 """
 SubmissionController & UI – Baseline Implementation
 Sequence diagram traceability:
-  Researcher → UI: submitResearchOutput(data)
-  UI → SubmissionController: submit(data)
-  SubmissionController → Validator: validateFormat(data)
-  alt [invalid] ← return error
+  Researcher -> UI: submitResearchOutput(data)
+  UI -> SubmissionController: submit(data)
+  SubmissionController-> Validator: validateFormat(data)
+  alt [invalid] <- return error
   [valid]
-    SubmissionController → Database: saveSubmission(data) → confirmation
-    SubmissionController → ReviewerManager: getAvailableReviewers()
-    loop [assign reviewers] → assignReview()
-    SubmissionController → EvaluationManager: startEvaluation()
-    sendNotification() → Researcher
+    SubmissionController -> Database: saveSubmission(data)-> confirmation
+    SubmissionController -> ReviewerManager: getAvailableReviewers()
+    loop [assign reviewers]-> assignReview()
+    SubmissionController-> EvaluationManager: startEvaluation()
+    sendNotification() -> Researcher
 """
 
 import time
@@ -82,25 +82,25 @@ class SubmissionController:
 
         # ── [valid] ──────────────────────────────────────────────────── #
 
-        # saveSubmission(data) → confirmation
+        # saveSubmission(data) -> confirmation
         call_log.append("Database.save_submission()")
         submission_id = self._database.save_submission(data)
         call_log.append("Database.confirmation()")
 
-        # getAvailableReviewers() → ReviewerManager
+        # getAvailableReviewers()-> ReviewerManager
         call_log.append("ReviewerManager.get_available_reviewers()")
-        # ReviewerManager → Database: fetchReviewers()
+        # ReviewerManager -> Database: fetchReviewers()
         call_log.append("Database.fetch_reviewers()")
-        # ReviewerManager → Reviewer: filterConflicts()
+        # ReviewerManager -> Reviewer: filterConflicts()
         call_log.append("ReviewerFilterHelper.filter_conflicts()")
-        # ReviewerManager → Reviewer: checkWorkload()
+        # ReviewerManager -> Reviewer: checkWorkload()
         call_log.append("ReviewerFilterHelper.check_workload()")
         filtered_reviewers = self._reviewer_manager.get_available_reviewers(
             submission_id, data.get("author_id", "")
         )
-        call_log.append("ReviewerManager.filteredReviewers → SubmissionController")
+        call_log.append("ReviewerManager.filteredReviewers -> SubmissionController")
 
-        # loop [assign reviewers] → assignReview()
+        # loop [assign reviewers] ->assignReview()
         call_log.append("SubmissionController.loop_assign_reviewers()")
         for r in filtered_reviewers[:3]:
             call_log.append(f"ReviewerManager.assignReview({r['id']})")
@@ -111,17 +111,17 @@ class SubmissionController:
             # In production this would be async; here we simulate inline
             reviewer["score"] = self._simulate_reviewer_score(reviewer)
 
-        # startEvaluation() → EvaluationManager
+        # startEvaluation() -> EvaluationManager
         call_log.append("EvaluationManager.start_evaluation()")
         self._evaluation_manager.start_evaluation(submission_id)
 
-        # loop [each reviewer] submitScore → saveScore → Database
+        # loop [each reviewer] submitScore -> saveScore -> Database
         for reviewer in assigned:
             call_log.append(f"Reviewer.submitScore({reviewer['id']})")
             call_log.append(f"Database.save_score({reviewer['id']})")
             self._evaluation_manager.submit_score(reviewer["id"], reviewer["score"])
 
-        # calculateAverage → checkConsensus → applyRules
+        # calculateAverage -> checkConsensus-> applyRules
         call_log.append("EvaluationManager.calculate_average()")
         average = self._evaluation_manager.calculate_average()
         call_log.append("EvaluationManager.check_consensus()")
@@ -129,13 +129,13 @@ class SubmissionController:
         call_log.append("EvaluationManager.apply_rules()")
         outcome = self._evaluation_manager.apply_rules()
 
-        # alt block → dispatch notification
+        # alt block-> dispatch notification
         call_log.append(f"EvaluationManager.dispatch_outcome({outcome})")
         call_log.append(f"NotificationService.notify_{outcome}()")
         self._evaluation_manager.dispatch_outcome(outcome, data.get("email", ""))
 
-        # sendNotification() → Researcher (final)
-        call_log.append("NotificationService.send_notification() → Researcher")
+        # sendNotification() -> Researcher (final)
+        call_log.append("NotificationService.send_notification()-> Researcher")
 
         self._database.update_submission_status(submission_id, "evaluated", outcome)
 
