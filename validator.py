@@ -1,7 +1,7 @@
 """
 Validator – Baseline Implementation
 Sequence diagram traceability:
-  validateFormat(data) → returns valid/invalid
+  validateFormat(data)-> returns valid/invalid
 """
 
 
