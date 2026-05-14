@@ -26,8 +26,6 @@
 └── report/
     ├── COS730_Assignment2_Report.pdf   (Full technical report, 15 pages)
     ├── empirical_results.json          (Raw benchmark data)
-    ├── empirical_comparison.py         (Benchmark runner)
-    └── report_generator.py             (PDF generator)
 ```
 
 ## Quick Start
