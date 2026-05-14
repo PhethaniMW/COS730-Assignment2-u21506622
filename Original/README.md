@@ -1,4 +1,4 @@
-# COS730 Assignment 2 — Intelligent Submission and Review System
+# COS730 Assignment 2
 
 **From Behavioural Models to Optimised Implementation**
 
